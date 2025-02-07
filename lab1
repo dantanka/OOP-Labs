@@ -1,1 +1,71 @@
-my lab1
+using System;
+using System.Windows.Forms;
+
+namespace lab3gpt
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Перевірка коректності введених даних
+            if (!double.TryParse(textBox1.Text, out double xValue) ||
+                !double.TryParse(textBox2.Text, out double yValue))
+            {
+                MessageBox.Show("Будь ласка, введіть коректні числові значення!", "Помилка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Створення об'єкта класу
+            MyClass class1 = new MyClass(xValue, yValue);
+
+            // Обчислення та вивід результатів
+            textBox3.Text = class1.f().ToString();
+            textBox4.Text = class1.f(xValue, yValue).ToString();
+            textBox5.Text = MyClass.fs(xValue, yValue).ToString();
+        }
+    }
+
+    public class MyClass
+    {
+        public double x { get; set; }
+        public double y { get; set; }
+
+        // Конструктори
+        public MyClass() { }
+
+        public MyClass(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+
+        // Приватний метод для обчислення функції
+        private static double CalculateFunction(double x, double y)
+        {
+            return Math.Pow(x - 1, 2) + (x - 1) * Math.Sin(x - 1) +
+                   Math.Pow(Math.Sin(x - 1), 2) + 3 * Math.Pow(y, 2);
+        }
+
+        // Методи обчислення
+        public double f()
+        {
+            return CalculateFunction(x, y);
+        }
+
+        public double f(double x, double y)
+        {
+            return CalculateFunction(x, y);
+        }
+
+        public static double fs(double xs, double ys)
+        {
+            return CalculateFunction(xs, ys);
+        }
+    }
+}
+
